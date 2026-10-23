@@ -1,0 +1,495 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sys_definitions" targetNamespace="urn:bpmn-workflow" exporter="bpmn-workflow" exporterVersion="0.1.0">
+  <bpmn:collaboration id="sys_collaboration">
+    <bpmn:participant id="sys_participant" name="Order fulfilment: validate, replenish, prepare and dispatch" processRef="sys_process" />
+    <bpmn:participant id="user_customer" name="Customer" />
+    <bpmn:messageFlow id="user_order_request" name="Order request" sourceRef="user_customer" targetRef="user_received" />
+    <bpmn:messageFlow id="user_dispatch_message" name="Dispatch confirmation" sourceRef="user_dispatch_order" targetRef="user_customer" />
+  </bpmn:collaboration>
+  <bpmn:process id="sys_process" name="Order fulfilment: validate, replenish, prepare and dispatch" isExecutable="false">
+    <bpmn:documentation>Descriptive BPMN interchange model; no execution engine is included.</bpmn:documentation>
+    <bpmn:laneSet id="sys_lanes">
+      <bpmn:lane id="user_operations" name="Order operations">
+        <bpmn:flowNodeRef>user_received</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_record_order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_validate_order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_valid_order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_reject_order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_rejected</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="user_warehouse" name="Warehouse team">
+        <bpmn:flowNodeRef>user_stock_available</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_await_stock</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_prepare_order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_pack_order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_prepared</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_dispatch_order</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_complete</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="user_finance" name="Finance team" />
+      <bpmn:lane id="user_systems" name="Order, inventory and billing systems">
+        <bpmn:flowNodeRef>user_check_stock</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>user_create_invoice</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="user_received" name="Customer order received">
+      <bpmn:documentation>Performer: operations</bpmn:documentation>
+    </bpmn:startEvent>
+    <bpmn:userTask id="user_record_order" name="Record the requested items and delivery address">
+      <bpmn:documentation>Record the supplied order details and preserve unresolved fields.
+Performer: operations</bpmn:documentation>
+    </bpmn:userTask>
+    <bpmn:userTask id="user_validate_order" name="Validate the order details and delivery requirements">
+      <bpmn:documentation>Check the agreed acceptance criteria; do not infer missing order details.
+Performer: operations</bpmn:documentation>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="user_valid_order" name="Are the order details valid?" default="user_f_invalid">
+      <bpmn:documentation>Performer: operations</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="user_reject_order" name="Explain the invalid order and request corrections">
+      <bpmn:documentation>Performer: operations</bpmn:documentation>
+    </bpmn:userTask>
+    <bpmn:endEvent id="user_rejected" name="Order rejected with reasons">
+      <bpmn:documentation>Performer: operations</bpmn:documentation>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="user_check_stock" name="Check item availability against inventory">
+      <bpmn:documentation>Performer: systems
+Accountable role: warehouse</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="user_stock_available" name="Are all ordered items available?" default="user_f_stock_pending">
+      <bpmn:documentation>Performer: warehouse</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:receiveTask id="user_await_stock" name="Request replenishment and await stock confirmation">
+      <bpmn:documentation>Keep the order pending until the stock confirmation is received, then recheck inventory. No timer or ordering integration is executed by this tool.
+Performer: warehouse</bpmn:documentation>
+    </bpmn:receiveTask>
+    <bpmn:parallelGateway id="user_prepare_order" name="Prepare packing and invoicing in parallel" gatewayDirection="Diverging">
+      <bpmn:documentation>Performer: warehouse</bpmn:documentation>
+    </bpmn:parallelGateway>
+    <bpmn:manualTask id="user_pack_order" name="Pick and pack the ordered items">
+      <bpmn:documentation>Performer: warehouse</bpmn:documentation>
+    </bpmn:manualTask>
+    <bpmn:serviceTask id="user_create_invoice" name="Create the customer invoice in the billing system">
+      <bpmn:documentation>Performer: systems
+Accountable role: finance</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="user_prepared" name="Packing and invoicing both complete" gatewayDirection="Converging">
+      <bpmn:documentation>Performer: warehouse</bpmn:documentation>
+    </bpmn:parallelGateway>
+    <bpmn:userTask id="user_dispatch_order" name="Dispatch the package and record shipment details">
+      <bpmn:documentation>Performer: warehouse</bpmn:documentation>
+    </bpmn:userTask>
+    <bpmn:endEvent id="user_complete" name="Order dispatched with confirmation">
+      <bpmn:documentation>Performer: warehouse</bpmn:documentation>
+    </bpmn:endEvent>
+    <bpmn:dataObject id="sys_product_record_order_output_0_object" />
+    <bpmn:dataObjectReference id="sys_product_record_order_output_0" name="Sales order" dataObjectRef="sys_product_record_order_output_0_object">
+      <bpmn:documentation>Work product: Sales order
+Direction: Output</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="sys_product_validate_order_input_0_object" />
+    <bpmn:dataObjectReference id="sys_product_validate_order_input_0" name="Sales order" dataObjectRef="sys_product_validate_order_input_0_object">
+      <bpmn:documentation>Work product: Sales order
+Direction: Input</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="sys_product_check_stock_input_0_object" />
+    <bpmn:dataObjectReference id="sys_product_check_stock_input_0" name="Sales order" dataObjectRef="sys_product_check_stock_input_0_object">
+      <bpmn:documentation>Work product: Sales order
+Direction: Input</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="sys_product_pack_order_input_0_object" />
+    <bpmn:dataObjectReference id="sys_product_pack_order_input_0" name="Sales order" dataObjectRef="sys_product_pack_order_input_0_object">
+      <bpmn:documentation>Work product: Sales order
+Direction: Input</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="sys_product_create_invoice_input_0_object" />
+    <bpmn:dataObjectReference id="sys_product_create_invoice_input_0" name="Sales order" dataObjectRef="sys_product_create_invoice_input_0_object">
+      <bpmn:documentation>Work product: Sales order
+Direction: Input</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="sys_product_create_invoice_output_1_object" />
+    <bpmn:dataObjectReference id="sys_product_create_invoice_output_1" name="Customer invoice" dataObjectRef="sys_product_create_invoice_output_1_object">
+      <bpmn:documentation>Work product: Customer invoice
+Direction: Output</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataObject id="sys_product_dispatch_order_input_0_object" />
+    <bpmn:dataObjectReference id="sys_product_dispatch_order_input_0" name="Customer invoice" dataObjectRef="sys_product_dispatch_order_input_0_object">
+      <bpmn:documentation>Work product: Customer invoice
+Direction: Input</bpmn:documentation>
+    </bpmn:dataObjectReference>
+    <bpmn:dataStoreReference id="sys_product_dispatch_order_output_1" name="Dispatch confirmation">
+      <bpmn:documentation>Work product: Dispatch confirmation
+Direction: Output</bpmn:documentation>
+    </bpmn:dataStoreReference>
+    <bpmn:sequenceFlow id="user_f_received_record" sourceRef="user_received" targetRef="user_record_order" />
+    <bpmn:sequenceFlow id="user_f_record_validate" sourceRef="user_record_order" targetRef="user_validate_order" />
+    <bpmn:sequenceFlow id="user_f_validate_decision" sourceRef="user_validate_order" targetRef="user_valid_order" />
+    <bpmn:sequenceFlow id="user_f_rejected" sourceRef="user_reject_order" targetRef="user_rejected" />
+    <bpmn:sequenceFlow id="user_f_stock_decision" sourceRef="user_check_stock" targetRef="user_stock_available" />
+    <bpmn:sequenceFlow id="user_f_recheck" sourceRef="user_await_stock" targetRef="user_check_stock" name="Stock confirmation received: recheck" />
+    <bpmn:sequenceFlow id="user_f_pack" sourceRef="user_prepare_order" targetRef="user_pack_order" />
+    <bpmn:sequenceFlow id="user_f_invoice" sourceRef="user_prepare_order" targetRef="user_create_invoice" />
+    <bpmn:sequenceFlow id="user_f_pack_join" sourceRef="user_pack_order" targetRef="user_prepared" />
+    <bpmn:sequenceFlow id="user_f_invoice_join" sourceRef="user_create_invoice" targetRef="user_prepared" />
+    <bpmn:sequenceFlow id="user_f_dispatch" sourceRef="user_prepared" targetRef="user_dispatch_order" />
+    <bpmn:sequenceFlow id="user_f_complete" sourceRef="user_dispatch_order" targetRef="user_complete" />
+    <bpmn:sequenceFlow id="user_f_invalid" sourceRef="user_valid_order" targetRef="user_reject_order" name="No: explain the corrections needed" />
+    <bpmn:sequenceFlow id="user_f_valid" sourceRef="user_valid_order" targetRef="user_check_stock" name="Yes: check inventory">
+      <bpmn:conditionExpression language="urn:bpmn-workflow:condition:v1" xsi:type="bpmn:tFormalExpression">Order details meet the supplied acceptance criteria</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="user_f_stock_pending" sourceRef="user_stock_available" targetRef="user_await_stock" name="No: await replenishment" />
+    <bpmn:sequenceFlow id="user_f_stock_ready" sourceRef="user_stock_available" targetRef="user_prepare_order" name="Yes: prepare the order">
+      <bpmn:conditionExpression language="urn:bpmn-workflow:condition:v1" xsi:type="bpmn:tFormalExpression">All ordered items are available</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:textAnnotation id="sys_info_record_order">
+      <bpmn:text>Uses: Order management system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="sys_info_record_order_link" sourceRef="user_record_order" targetRef="sys_info_record_order" />
+    <bpmn:association id="sys_product_record_order_output_0_link" sourceRef="user_record_order" targetRef="sys_product_record_order_output_0" associationDirection="One" />
+    <bpmn:textAnnotation id="sys_info_validate_order">
+      <bpmn:text>Uses: Order management system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="sys_info_validate_order_link" sourceRef="user_validate_order" targetRef="sys_info_validate_order" />
+    <bpmn:association id="sys_product_validate_order_input_0_link" sourceRef="sys_product_validate_order_input_0" targetRef="user_validate_order" associationDirection="One" />
+    <bpmn:textAnnotation id="sys_info_reject_order">
+      <bpmn:text>Uses: Order management system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="sys_info_reject_order_link" sourceRef="user_reject_order" targetRef="sys_info_reject_order" />
+    <bpmn:textAnnotation id="sys_info_check_stock">
+      <bpmn:text>Uses: Inventory system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="sys_info_check_stock_link" sourceRef="user_check_stock" targetRef="sys_info_check_stock" />
+    <bpmn:association id="sys_product_check_stock_input_0_link" sourceRef="sys_product_check_stock_input_0" targetRef="user_check_stock" associationDirection="One" />
+    <bpmn:textAnnotation id="sys_info_await_stock">
+      <bpmn:text>Uses: Inventory system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="sys_info_await_stock_link" sourceRef="user_await_stock" targetRef="sys_info_await_stock" />
+    <bpmn:association id="sys_product_pack_order_input_0_link" sourceRef="sys_product_pack_order_input_0" targetRef="user_pack_order" associationDirection="One" />
+    <bpmn:textAnnotation id="sys_info_create_invoice">
+      <bpmn:text>Uses: Billing system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="sys_info_create_invoice_link" sourceRef="user_create_invoice" targetRef="sys_info_create_invoice" />
+    <bpmn:association id="sys_product_create_invoice_input_0_link" sourceRef="sys_product_create_invoice_input_0" targetRef="user_create_invoice" associationDirection="One" />
+    <bpmn:association id="sys_product_create_invoice_output_1_link" sourceRef="user_create_invoice" targetRef="sys_product_create_invoice_output_1" associationDirection="One" />
+    <bpmn:textAnnotation id="sys_info_dispatch_order">
+      <bpmn:text>Uses: Order management system</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="sys_info_dispatch_order_link" sourceRef="user_dispatch_order" targetRef="sys_info_dispatch_order" />
+    <bpmn:association id="sys_product_dispatch_order_input_0_link" sourceRef="sys_product_dispatch_order_input_0" targetRef="user_dispatch_order" associationDirection="One" />
+    <bpmn:association id="sys_product_dispatch_order_output_1_link" sourceRef="user_dispatch_order" targetRef="sys_product_dispatch_order_output_1" associationDirection="One" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="sys_diagram">
+    <bpmndi:BPMNPlane id="sys_plane" bpmnElement="sys_collaboration">
+      <bpmndi:BPMNShape id="shape_sys_participant" bpmnElement="sys_participant" isHorizontal="true">
+        <dc:Bounds x="30" y="60" width="4320" height="1755" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_operations" bpmnElement="user_operations" isHorizontal="true">
+        <dc:Bounds x="60" y="60" width="4290" height="365" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_warehouse" bpmnElement="user_warehouse" isHorizontal="true">
+        <dc:Bounds x="60" y="425" width="4290" height="660" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_finance" bpmnElement="user_finance" isHorizontal="true">
+        <dc:Bounds x="60" y="1085" width="4290" height="365" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_systems" bpmnElement="user_systems" isHorizontal="true">
+        <dc:Bounds x="60" y="1450" width="4290" height="365" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_received" bpmnElement="user_received">
+        <dc:Bounds x="352.0" y="192.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="250.0" y="238.0" width="240" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_record_order" bpmnElement="user_record_order">
+        <dc:Bounds x="600" y="160" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_validate_order" bpmnElement="user_validate_order">
+        <dc:Bounds x="950" y="160" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_valid_order" bpmnElement="user_valid_order" isMarkerVisible="true">
+        <dc:Bounds x="1395.0" y="185.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1195.0" y="90.0" width="220" height="70" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_reject_order" bpmnElement="user_reject_order">
+        <dc:Bounds x="1650" y="160" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_rejected" bpmnElement="user_rejected">
+        <dc:Bounds x="2102.0" y="192.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2000.0" y="238.0" width="240" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_check_stock" bpmnElement="user_check_stock">
+        <dc:Bounds x="1650" y="1550" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_stock_available" bpmnElement="user_stock_available" isMarkerVisible="true">
+        <dc:Bounds x="2095.0" y="550.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1895.0" y="455.0" width="220" height="70" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_await_stock" bpmnElement="user_await_stock">
+        <dc:Bounds x="2350" y="525" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_prepare_order" bpmnElement="user_prepare_order">
+        <dc:Bounds x="2445.0" y="845.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2245.0" y="750.0" width="220" height="70" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_pack_order" bpmnElement="user_pack_order">
+        <dc:Bounds x="2700" y="525" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_create_invoice" bpmnElement="user_create_invoice">
+        <dc:Bounds x="2700" y="1550" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_prepared" bpmnElement="user_prepared">
+        <dc:Bounds x="3145.0" y="550.0" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2945.0" y="455.0" width="220" height="70" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_dispatch_order" bpmnElement="user_dispatch_order">
+        <dc:Bounds x="3400" y="525" width="240" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_user_complete" bpmnElement="user_complete">
+        <dc:Bounds x="3852.0" y="557.0" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3750.0" y="603.0" width="240" height="65" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_sys_info_record_order" bpmnElement="sys_info_record_order">
+        <dc:Bounds x="600" y="85" width="240" height="65" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_info_record_order_link" bpmnElement="sys_info_record_order_link">
+        <di:waypoint x="720.0" y="160" />
+        <di:waypoint x="720.0" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_record_order_output_0" bpmnElement="sys_product_record_order_output_0">
+        <dc:Bounds x="600" y="295" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_record_order_output_0_link" bpmnElement="sys_product_record_order_output_0_link">
+        <di:waypoint x="720.0" y="260" />
+        <di:waypoint x="662.5" y="295" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_info_validate_order" bpmnElement="sys_info_validate_order">
+        <dc:Bounds x="950" y="85" width="240" height="65" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_info_validate_order_link" bpmnElement="sys_info_validate_order_link">
+        <di:waypoint x="1070.0" y="160" />
+        <di:waypoint x="1070.0" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_validate_order_input_0" bpmnElement="sys_product_validate_order_input_0">
+        <dc:Bounds x="950" y="295" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_validate_order_input_0_link" bpmnElement="sys_product_validate_order_input_0_link">
+        <di:waypoint x="1012.5" y="295" />
+        <di:waypoint x="1070.0" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_info_reject_order" bpmnElement="sys_info_reject_order">
+        <dc:Bounds x="1650" y="85" width="240" height="65" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_info_reject_order_link" bpmnElement="sys_info_reject_order_link">
+        <di:waypoint x="1770.0" y="160" />
+        <di:waypoint x="1770.0" y="150" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_info_check_stock" bpmnElement="sys_info_check_stock">
+        <dc:Bounds x="1650" y="1475" width="240" height="65" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_info_check_stock_link" bpmnElement="sys_info_check_stock_link">
+        <di:waypoint x="1770.0" y="1550" />
+        <di:waypoint x="1770.0" y="1540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_check_stock_input_0" bpmnElement="sys_product_check_stock_input_0">
+        <dc:Bounds x="1650" y="1685" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_check_stock_input_0_link" bpmnElement="sys_product_check_stock_input_0_link">
+        <di:waypoint x="1712.5" y="1685" />
+        <di:waypoint x="1770.0" y="1650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_info_await_stock" bpmnElement="sys_info_await_stock">
+        <dc:Bounds x="2350" y="450" width="240" height="65" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_info_await_stock_link" bpmnElement="sys_info_await_stock_link">
+        <di:waypoint x="2470.0" y="525" />
+        <di:waypoint x="2470.0" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_pack_order_input_0" bpmnElement="sys_product_pack_order_input_0">
+        <dc:Bounds x="2700" y="660" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_pack_order_input_0_link" bpmnElement="sys_product_pack_order_input_0_link">
+        <di:waypoint x="2762.5" y="660" />
+        <di:waypoint x="2820.0" y="625" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_info_create_invoice" bpmnElement="sys_info_create_invoice">
+        <dc:Bounds x="2700" y="1475" width="240" height="65" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_info_create_invoice_link" bpmnElement="sys_info_create_invoice_link">
+        <di:waypoint x="2820.0" y="1550" />
+        <di:waypoint x="2820.0" y="1540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_create_invoice_input_0" bpmnElement="sys_product_create_invoice_input_0">
+        <dc:Bounds x="2700" y="1685" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_create_invoice_input_0_link" bpmnElement="sys_product_create_invoice_input_0_link">
+        <di:waypoint x="2762.5" y="1685" />
+        <di:waypoint x="2820.0" y="1650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_create_invoice_output_1" bpmnElement="sys_product_create_invoice_output_1">
+        <dc:Bounds x="2845" y="1685" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_create_invoice_output_1_link" bpmnElement="sys_product_create_invoice_output_1_link">
+        <di:waypoint x="2820.0" y="1650" />
+        <di:waypoint x="2907.5" y="1685" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_info_dispatch_order" bpmnElement="sys_info_dispatch_order">
+        <dc:Bounds x="3400" y="450" width="240" height="65" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_info_dispatch_order_link" bpmnElement="sys_info_dispatch_order_link">
+        <di:waypoint x="3520.0" y="525" />
+        <di:waypoint x="3520.0" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_dispatch_order_input_0" bpmnElement="sys_product_dispatch_order_input_0">
+        <dc:Bounds x="3400" y="660" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_dispatch_order_input_0_link" bpmnElement="sys_product_dispatch_order_input_0_link">
+        <di:waypoint x="3462.5" y="660" />
+        <di:waypoint x="3520.0" y="625" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_sys_product_dispatch_order_output_1" bpmnElement="sys_product_dispatch_order_output_1">
+        <dc:Bounds x="3545" y="660" width="125" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_sys_product_dispatch_order_output_1_link" bpmnElement="sys_product_dispatch_order_output_1_link">
+        <di:waypoint x="3520.0" y="625" />
+        <di:waypoint x="3607.5" y="660" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_received_record" bpmnElement="user_f_received_record">
+        <di:waypoint x="388.0" y="210.0" />
+        <di:waypoint x="413.0" y="210.0" />
+        <di:waypoint x="413.0" y="210.0" />
+        <di:waypoint x="600" y="210.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_record_validate" bpmnElement="user_f_record_validate">
+        <di:waypoint x="840" y="210.0" />
+        <di:waypoint x="865" y="210.0" />
+        <di:waypoint x="865" y="210.0" />
+        <di:waypoint x="950" y="210.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_validate_decision" bpmnElement="user_f_validate_decision">
+        <di:waypoint x="1190" y="210.0" />
+        <di:waypoint x="1215" y="210.0" />
+        <di:waypoint x="1215" y="210.0" />
+        <di:waypoint x="1395.0" y="210.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_rejected" bpmnElement="user_f_rejected">
+        <di:waypoint x="1890" y="210.0" />
+        <di:waypoint x="1915" y="210.0" />
+        <di:waypoint x="1915" y="210.0" />
+        <di:waypoint x="2102.0" y="210.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_stock_decision" bpmnElement="user_f_stock_decision">
+        <di:waypoint x="1890" y="1600.0" />
+        <di:waypoint x="1915" y="1600.0" />
+        <di:waypoint x="1915" y="575.0" />
+        <di:waypoint x="2095.0" y="575.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_recheck" bpmnElement="user_f_recheck">
+        <di:waypoint x="2470.0" y="525" />
+        <di:waypoint x="2470.0" y="485" />
+        <di:waypoint x="1770.0" y="485" />
+        <di:waypoint x="1770.0" y="1550" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1782.0" y="987.5" width="220" height="60" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_pack" bpmnElement="user_f_pack">
+        <di:waypoint x="2495.0" y="870.0" />
+        <di:waypoint x="2520.0" y="870.0" />
+        <di:waypoint x="2520.0" y="575.0" />
+        <di:waypoint x="2700" y="575.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_invoice" bpmnElement="user_f_invoice">
+        <di:waypoint x="2495.0" y="870.0" />
+        <di:waypoint x="2520.0" y="870.0" />
+        <di:waypoint x="2520.0" y="1600.0" />
+        <di:waypoint x="2700" y="1600.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_pack_join" bpmnElement="user_f_pack_join">
+        <di:waypoint x="2940" y="575.0" />
+        <di:waypoint x="2965" y="575.0" />
+        <di:waypoint x="2965" y="575.0" />
+        <di:waypoint x="3145.0" y="575.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_invoice_join" bpmnElement="user_f_invoice_join">
+        <di:waypoint x="2940" y="1600.0" />
+        <di:waypoint x="2965" y="1600.0" />
+        <di:waypoint x="2965" y="575.0" />
+        <di:waypoint x="3145.0" y="575.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_dispatch" bpmnElement="user_f_dispatch">
+        <di:waypoint x="3195.0" y="575.0" />
+        <di:waypoint x="3220.0" y="575.0" />
+        <di:waypoint x="3220.0" y="575.0" />
+        <di:waypoint x="3400" y="575.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_complete" bpmnElement="user_f_complete">
+        <di:waypoint x="3640" y="575.0" />
+        <di:waypoint x="3665" y="575.0" />
+        <di:waypoint x="3665" y="575.0" />
+        <di:waypoint x="3852.0" y="575.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_invalid" bpmnElement="user_f_invalid">
+        <di:waypoint x="1445.0" y="210.0" />
+        <di:waypoint x="1470.0" y="210.0" />
+        <di:waypoint x="1470.0" y="210.0" />
+        <di:waypoint x="1650" y="210.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1450.0" y="142.0" width="220" height="60" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_valid" bpmnElement="user_f_valid">
+        <di:waypoint x="1445.0" y="210.0" />
+        <di:waypoint x="1470.0" y="210.0" />
+        <di:waypoint x="1470.0" y="1600.0" />
+        <di:waypoint x="1650" y="1600.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1482.0" y="875.0" width="220" height="60" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_stock_pending" bpmnElement="user_f_stock_pending">
+        <di:waypoint x="2145.0" y="575.0" />
+        <di:waypoint x="2170.0" y="575.0" />
+        <di:waypoint x="2170.0" y="575.0" />
+        <di:waypoint x="2350" y="575.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2150.0" y="507.0" width="220" height="60" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_f_stock_ready" bpmnElement="user_f_stock_ready">
+        <di:waypoint x="2145.0" y="575.0" />
+        <di:waypoint x="2170.0" y="575.0" />
+        <di:waypoint x="2170.0" y="870.0" />
+        <di:waypoint x="2445.0" y="870.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2182.0" y="692.5" width="220" height="60" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape_user_customer" bpmnElement="user_customer" isHorizontal="true">
+        <dc:Bounds x="30" y="1915" width="4320" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="di_user_order_request" bpmnElement="user_order_request">
+        <di:waypoint x="416.0" y="1915" />
+        <di:waypoint x="416.0" y="210.0" />
+        <di:waypoint x="388.0" y="210.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="di_user_dispatch_message" bpmnElement="user_dispatch_message">
+        <di:waypoint x="3640" y="575.0" />
+        <di:waypoint x="3668" y="575.0" />
+        <di:waypoint x="3668" y="1915" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

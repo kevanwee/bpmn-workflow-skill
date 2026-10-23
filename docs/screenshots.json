@@ -1,0 +1,34 @@
+{
+  "captured_on": "2026-10-23",
+  "source": "Actual local bpmn.io editor; illustrative order process; normal zoom/selection; no DOM replacement or compositing",
+  "views": [
+    {
+      "file": "editor-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "810f9bfec821f77ad3bfee1fd98434fad91fcaa4ead66f7c730a7892456d90d5",
+      "shell_accessibility_violations": [],
+      "overflow": false
+    },
+    {
+      "file": "editor-detail-desktop.png",
+      "width": 1440,
+      "height": 1000,
+      "sha256": "e8b2b4e9c564f7ca5d17be3fc244f3dc7032a4b076e7300fc31e963ba684a89d"
+    },
+    {
+      "file": "editor-mobile.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "8cb2cea9eb53ec099926ea78a35773ca1cbd5ec0f876a7aaeb5501a52ef57491",
+      "shell_accessibility_violations": [],
+      "overflow": false
+    },
+    {
+      "file": "editor-detail-mobile.png",
+      "width": 390,
+      "height": 844,
+      "sha256": "e7c0a6d652660021bd18fc633ccb9386de89150afacd61e137f92e98e09bd19d"
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-23T01:23:54.394639+00:00",
+  "title": "Design System: BPMN Workflow",
+  "extensions": {
+    "colorMeta": {
+      "green": {
+        "role": "primary",
+        "displayName": "Green",
+        "tonalRamp": [
+          "oklch(15.0% 0.0651 168.18)",
+          "oklch(26.4% 0.0651 168.18)",
+          "oklch(37.9% 0.0651 168.18)",
+          "oklch(49.3% 0.0651 168.18)",
+          "oklch(60.7% 0.0651 168.18)",
+          "oklch(72.1% 0.0651 168.18)",
+          "oklch(83.6% 0.0651 168.18)",
+          "oklch(95.0% 0.0651 168.18)"
+        ]
+      },
+      "green-hover": {
+        "role": "primary",
+        "displayName": "Green hover",
+        "tonalRamp": [
+          "oklch(15.0% 0.0554 167.18)",
+          "oklch(26.4% 0.0554 167.18)",
+          "oklch(37.9% 0.0554 167.18)",
+          "oklch(49.3% 0.0554 167.18)",
+          "oklch(60.7% 0.0554 167.18)",
+          "oklch(72.1% 0.0554 167.18)",
+          "oklch(83.6% 0.0554 167.18)",
+          "oklch(95.0% 0.0554 167.18)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.0374 173.14)",
+          "oklch(26.4% 0.0374 173.14)",
+          "oklch(37.9% 0.0374 173.14)",
+          "oklch(49.3% 0.0374 173.14)",
+          "oklch(60.7% 0.0374 173.14)",
+          "oklch(72.1% 0.0374 173.14)",
+          "oklch(83.6% 0.0374 173.14)",
+          "oklch(95.0% 0.0374 173.14)"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.0388 166.27)",
+          "oklch(26.4% 0.0388 166.27)",
+          "oklch(37.9% 0.0388 166.27)",
+          "oklch(49.3% 0.0388 166.27)",
+          "oklch(60.7% 0.0388 166.27)",
+          "oklch(72.1% 0.0388 166.27)",
+          "oklch(83.6% 0.0388 166.27)",
+          "oklch(95.0% 0.0388 166.27)"
+        ]
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "Page",
+        "tonalRamp": [
+          "oklch(15.0% 0.0051 145.54)",
+          "oklch(26.4% 0.0051 145.54)",
+          "oklch(37.9% 0.0051 145.54)",
+          "oklch(49.3% 0.0051 145.54)",
+          "oklch(60.7% 0.0051 145.54)",
+          "oklch(72.1% 0.0051 145.54)",
+          "oklch(83.6% 0.0051 145.54)",
+          "oklch(95.0% 0.0051 145.54)"
+        ]
+      },
+      "header": {
+        "role": "neutral",
+        "displayName": "Header",
+        "tonalRamp": [
+          "oklch(15.0% 0.0109 149.86)",
+          "oklch(26.4% 0.0109 149.86)",
+          "oklch(37.9% 0.0109 149.86)",
+          "oklch(49.3% 0.0109 149.86)",
+          "oklch(60.7% 0.0109 149.86)",
+          "oklch(72.1% 0.0109 149.86)",
+          "oklch(83.6% 0.0109 149.86)",
+          "oklch(95.0% 0.0109 149.86)"
+        ]
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas",
+        "tonalRamp": [
+          "oklch(15.0% 0.0000 89.88)",
+          "oklch(26.4% 0.0000 89.88)",
+          "oklch(37.9% 0.0000 89.88)",
+          "oklch(49.3% 0.0000 89.88)",
+          "oklch(60.7% 0.0000 89.88)",
+          "oklch(72.1% 0.0000 89.88)",
+          "oklch(83.6% 0.0000 89.88)",
+          "oklch(95.0% 0.0000 89.88)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15.0% 0.0160 154.45)",
+          "oklch(26.4% 0.0160 154.45)",
+          "oklch(37.9% 0.0160 154.45)",
+          "oklch(49.3% 0.0160 154.45)",
+          "oklch(60.7% 0.0160 154.45)",
+          "oklch(72.1% 0.0160 154.45)",
+          "oklch(83.6% 0.0160 154.45)",
+          "oklch(95.0% 0.0160 154.45)"
+        ]
+      },
+      "control-border": {
+        "role": "neutral",
+        "displayName": "Control border",
+        "tonalRamp": [
+          "oklch(15.0% 0.0286 153.74)",
+          "oklch(26.4% 0.0286 153.74)",
+          "oklch(37.9% 0.0286 153.74)",
+          "oklch(49.3% 0.0286 153.74)",
+          "oklch(60.7% 0.0286 153.74)",
+          "oklch(72.1% 0.0286 153.74)",
+          "oklch(83.6% 0.0286 153.74)",
+          "oklch(95.0% 0.0286 153.74)"
+        ]
+      },
+      "control-hover": {
+        "role": "neutral",
+        "displayName": "Control hover",
+        "tonalRamp": [
+          "oklch(15.0% 0.0158 154.46)",
+          "oklch(26.4% 0.0158 154.46)",
+          "oklch(37.9% 0.0158 154.46)",
+          "oklch(49.3% 0.0158 154.46)",
+          "oklch(60.7% 0.0158 154.46)",
+          "oklch(72.1% 0.0158 154.46)",
+          "oklch(83.6% 0.0158 154.46)",
+          "oklch(95.0% 0.0158 154.46)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15.0% 0.0959 154.95)",
+          "oklch(26.4% 0.0959 154.95)",
+          "oklch(37.9% 0.0959 154.95)",
+          "oklch(49.3% 0.0959 154.95)",
+          "oklch(60.7% 0.0959 154.95)",
+          "oklch(72.1% 0.0959 154.95)",
+          "oklch(83.6% 0.0959 154.95)",
+          "oklch(95.0% 0.0959 154.95)"
+        ]
+      },
+      "selection": {
+        "role": "neutral",
+        "displayName": "Selection",
+        "tonalRamp": [
+          "oklch(15.0% 0.0370 157.91)",
+          "oklch(26.4% 0.0370 157.91)",
+          "oklch(37.9% 0.0370 157.91)",
+          "oklch(49.3% 0.0370 157.91)",
+          "oklch(60.7% 0.0370 157.91)",
+          "oklch(72.1% 0.0370 157.91)",
+          "oklch(83.6% 0.0370 157.91)",
+          "oklch(95.0% 0.0370 157.91)"
+        ]
+      },
+      "selection-ink": {
+        "role": "neutral",
+        "displayName": "Selection ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.0392 167.67)",
+          "oklch(26.4% 0.0392 167.67)",
+          "oklch(37.9% 0.0392 167.67)",
+          "oklch(49.3% 0.0392 167.67)",
+          "oklch(60.7% 0.0392 167.67)",
+          "oklch(72.1% 0.0392 167.67)",
+          "oklch(83.6% 0.0392 167.67)",
+          "oklch(95.0% 0.0392 167.67)"
+        ]
+      },
+      "error": {
+        "role": "semantic",
+        "displayName": "Error",
+        "tonalRamp": [
+          "oklch(15.0% 0.1543 21.04)",
+          "oklch(26.4% 0.1543 21.04)",
+          "oklch(37.9% 0.1543 21.04)",
+          "oklch(49.3% 0.1543 21.04)",
+          "oklch(60.7% 0.1543 21.04)",
+          "oklch(72.1% 0.1543 21.04)",
+          "oklch(83.6% 0.1543 21.04)",
+          "oklch(95.0% 0.1543 21.04)"
+        ]
+      },
+      "error-surface": {
+        "role": "semantic",
+        "displayName": "Error surface",
+        "tonalRamp": [
+          "oklch(15.0% 0.0141 22.76)",
+          "oklch(26.4% 0.0141 22.76)",
+          "oklch(37.9% 0.0141 22.76)",
+          "oklch(49.3% 0.0141 22.76)",
+          "oklch(60.7% 0.0141 22.76)",
+          "oklch(72.1% 0.0141 22.76)",
+          "oklch(83.6% 0.0141 22.76)",
+          "oklch(95.0% 0.0141 22.76)"
+        ]
+      },
+      "scrollbar": {
+        "role": "neutral",
+        "displayName": "Scrollbar",
+        "tonalRamp": [
+          "oklch(15.0% 0.0357 157.36)",
+          "oklch(26.4% 0.0357 157.36)",
+          "oklch(37.9% 0.0357 157.36)",
+          "oklch(49.3% 0.0357 157.36)",
+          "oklch(60.7% 0.0357 157.36)",
+          "oklch(72.1% 0.0357 157.36)",
+          "oklch(83.6% 0.0357 157.36)",
+          "oklch(95.0% 0.0357 157.36)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page headline",
+        "purpose": "BPMN Workflow title."
+      },
+      "title": {
+        "displayName": "Section title",
+        "purpose": "Inspector and editing-boundary headings."
+      },
+      "body": {
+        "displayName": "Inspector body",
+        "purpose": "Secondary explanatory paragraphs."
+      },
+      "label": {
+        "displayName": "Form label",
+        "purpose": "Field labels and narrow-screen toolbar text."
+      },
+      "status": {
+        "displayName": "Status",
+        "purpose": "Persistent import/edit/export feedback."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "button-background",
+        "value": "background-color .16s ease-out",
+        "purpose": "Buttons and file-open label, only under prefers-reduced-motion: no-preference."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stacked-editor",
+        "value": "800px"
+      }
+    ],
+    "rampNote": "Tonal ramps are synthesized OKLCH preview extensions, not additional shipped CSS colors. Shipped primitives live only in DESIGN.md frontmatter."
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Download BPMN and inspector submit.",
+      "html": "<button class=\"ds-primary\">Download BPMN</button>",
+      "css": ".ds-primary{font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;border:1px solid var(--green,#205644);background:var(--green,#205644);color:white;border-radius:6px;padding:.65rem .9rem;cursor:pointer;white-space:nowrap;}.ds-primary:hover{background:#133f30;}.ds-primary:focus-visible{outline:3px solid #347950;outline-offset:3px}.ds-primary:disabled{opacity:.5;cursor:wait;}@media(prefers-reduced-motion:no-preference){.ds-primary{transition:background-color .16s ease-out;}}"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Fit diagram and SVG export.",
+      "html": "<button class=\"ds-secondary\">Fit diagram</button>",
+      "css": ".ds-secondary{font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;border:1px solid #acbfb1;background:white;color:#19352d;border-radius:6px;padding:.65rem .9rem;cursor:pointer;white-space:nowrap;}.ds-secondary:hover{background:#e3eee6;}.ds-secondary:focus-visible{outline:3px solid #347950;outline-offset:3px}.ds-secondary:disabled{opacity:.5;cursor:wait;}@media(prefers-reduced-motion:no-preference){.ds-secondary{transition:background-color .16s ease-out;}}"
+    },
+    {
+      "name": "Name field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Editable selected-element name.",
+      "html": "<label class=\"ds-label\" for=\"ds-name\">Name</label><input id=\"ds-name\" class=\"ds-name\" value=\"Review order\" autocomplete=\"off\">",
+      "css": ".ds-label{font-family:ui-sans-serif,system-ui,sans-serif;display:block;font-size:14px;color:#19352d;margin:18px 0 7px;}.ds-name{font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;display:block;box-sizing:border-box;width:100%;padding:10px;border:1px solid #acbfb1;border-radius:5px;background:white;color:#19352d;caret-color:var(--green,#205644);}.ds-name:focus-visible{outline:3px solid #347950;outline-offset:3px}"
+    },
+    {
+      "name": "Instructions and context",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Editable selected-element documentation.",
+      "html": "<label class=\"ds-label\" for=\"ds-context\">Instructions and context</label><textarea id=\"ds-context\" class=\"ds-context\" rows=\"7\">Check the order details.</textarea>",
+      "css": ".ds-label{font-family:ui-sans-serif,system-ui,sans-serif;display:block;font-size:14px;color:#19352d;margin:18px 0 7px;}.ds-context{font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;display:block;box-sizing:border-box;width:100%;padding:10px;border:1px solid #acbfb1;border-radius:5px;background:white;color:#19352d;caret-color:var(--green,#205644);resize:vertical;}.ds-context:focus-visible{outline:3px solid #347950;outline-offset:3px}"
+    },
+    {
+      "name": "Diagram action navigation",
+      "kind": "nav",
+      "description": "Wrapping action row; Open BPMN uses a focusable file input and styled label.",
+      "html": "<nav class=\"ds-actions\" aria-label=\"Diagram actions\"><label class=\"ds-open\" for=\"ds-file\">Open BPMN</label><input id=\"ds-file\" class=\"ds-file\" type=\"file\" accept=\".bpmn,.xml\" aria-label=\"Open BPMN file\"><button class=\"ds-fit\">Fit diagram</button></nav>",
+      "css": ".ds-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}.ds-open,.ds-fit{font-family:ui-sans-serif,system-ui,sans-serif;font-size:16px;border:1px solid #acbfb1;border-radius:6px;background:white;color:#19352d;padding:.65rem .9rem;cursor:pointer;white-space:nowrap;}.ds-file{position:absolute;width:1px;height:1px;opacity:0;}.ds-open:hover,.ds-fit:hover{background:#e3eee6;}.ds-fit:focus-visible{outline:3px solid #347950;outline-offset:3px}.ds-actions:has(.ds-file:focus-visible) .ds-open{outline:3px solid #347950;outline-offset:3px;}@media(max-width:800px){.ds-open,.ds-fit{padding:.6rem .7rem;font-size:14px;}}@media(prefers-reduced-motion:no-preference){.ds-open,.ds-fit{transition:background-color .16s ease-out;}}"
+    },
+    {
+      "name": "Persistent status",
+      "kind": "custom",
+      "refersTo": "status",
+      "description": "Polite feedback below the diagram; add ds-error for import/export errors.",
+      "html": "<p class=\"ds-status\" role=\"status\" aria-live=\"polite\">Element updated. Download BPMN to keep your changes.</p>",
+      "css": ".ds-status{font-family:ui-sans-serif,system-ui,sans-serif;margin:0;padding:12px 24px;font-size:13px;border-top:1px solid var(--line,#d6e1d9);color:#405c50;background:white;}.ds-status.ds-error{color:#9c2530;background:#fff2f1;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The quiet working surface",
+    "overview": "This phrase describes the inherited direction recorded in PRODUCT.md, rather than a new identity. Near-white surfaces, dark green ink and restrained green actions frame an immediately available diagram. The canvas is the main working area; the shell supplies compact controls and readable context.\n\nThis document records the shipped editor in `skills/bpmn-workflow/editor`, checked against the desktop and mobile review captures listed in `docs/screenshots.json`. The bpmn.io canvas, palette, symbols and attribution remain the upstream visual system; the shell does not redefine BPMN notation.",
+    "keyCharacteristics": [
+      "A large white diagram canvas with a narrow contextual inspector.",
+      "A compact, wrapping toolbar with restrained green primary actions.",
+      "System typography, thin borders and flat surfaces.",
+      "A visible editing boundary and persistent status feedback."
+    ],
+    "rules": [
+      {
+        "name": "The Canvas Rule",
+        "body": "Keep shell colors separate from the upstream diagram notation; preserve bpmn.io's familiar symbols and attribution.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do preserve the inherited white/green shell and original bpmn.io notation.",
+      "Do keep the canvas dominant and allow toolbar controls to wrap on narrow screens.",
+      "Do preserve visible keyboard focus, reduced-motion handling and persistent status feedback.",
+      "Do keep editing limits and the illustrative nature of the example visible."
+    ],
+    "donts": [
+      "Don't add decorative shadows, cards or display fonts to this scoped extraction.",
+      "Don't recolor BPMN notation to match the shell accent or remove upstream attribution.",
+      "Don't present diagram validation or editing as task execution or proof of business outcomes.",
+      "Don't describe the native documentation-entry select as a custom styled field."
+    ]
+  }
+}
