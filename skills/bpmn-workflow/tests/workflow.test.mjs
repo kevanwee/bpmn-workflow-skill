@@ -17,6 +17,14 @@ test('Generator emits importable lanes, routes, products and external messages',
   assert.throws(()=>execFileSync(python,['scripts/bpmn.py','generate','examples/order-fulfilment.json','--out',path.join(dir,'model')],{stdio:'pipe'}));
  }finally{await rm(dir,{recursive:true,force:true})}
 });
+test('Connectors avoid unrelated shapes and the bundled example is current',async()=>{
+ const dir=await mkdtemp(path.join(tmpdir(),'bpmn-'));
+ try{execFileSync(python,['scripts/bpmn.py','generate','examples/order-fulfilment.json','--out',path.join(dir,'model')]);
+  const generated=path.join(dir,'model/process.bpmn');
+  assert.equal(execFileSync(python,['scripts/layout_check.py',generated],{encoding:'utf8'}).trim(),'layout ok');
+  assert.equal(await readFile('examples/order-fulfilment.bpmn','utf8'),await readFile(generated,'utf8'));
+ }finally{await rm(dir,{recursive:true,force:true})}
+});
 test('Invalid references, disconnected work and incompatible performers are rejected',async()=>{
  const dir=await mkdtemp(path.join(tmpdir(),'bpmn-'));const spec=JSON.parse(await readFile('examples/order-fulfilment.json','utf8'));
  try{for(const change of [s=>s.flows[0].target='unknown',s=>s.nodes.push({id:'orphan',name:'Unreachable work',type:'user',lane:'operations'}),s=>s.nodes.find(n=>n.id==='create-invoice').responsible_role='customer',s=>s.nodes.find(n=>n.id==='pack-order').system_refs=['inventory-system'],s=>s.flows.find(e=>e.id==='f-valid').label='']){

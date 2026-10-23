@@ -6,7 +6,7 @@
       "file": "editor-desktop.png",
       "width": 1440,
       "height": 1000,
-      "sha256": "810f9bfec821f77ad3bfee1fd98434fad91fcaa4ead66f7c730a7892456d90d5",
+      "sha256": "5a953ea7a3084ebb263785281baa7bbcc3e7a4c4e7d8ca81fa870b2bbc93e29e",
       "shell_accessibility_violations": [],
       "overflow": false
     },
@@ -14,13 +14,13 @@
       "file": "editor-detail-desktop.png",
       "width": 1440,
       "height": 1000,
-      "sha256": "e8b2b4e9c564f7ca5d17be3fc244f3dc7032a4b076e7300fc31e963ba684a89d"
+      "sha256": "ef90ad5662032ecb50cacc9ad98bcc41bf9d48083ac688274f7a1d002f6aac4f"
     },
     {
       "file": "editor-mobile.png",
       "width": 390,
       "height": 844,
-      "sha256": "8cb2cea9eb53ec099926ea78a35773ca1cbd5ec0f876a7aaeb5501a52ef57491",
+      "sha256": "a5d5a77a0d54956e5e45eca546a92c4bb73210a43b1b00fdf21f97fe794fda69",
       "shell_accessibility_violations": [],
       "overflow": false
     },

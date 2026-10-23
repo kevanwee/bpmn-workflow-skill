@@ -368,127 +368,129 @@ Direction: Output</bpmn:documentation>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_received_record" bpmnElement="user_f_received_record">
         <di:waypoint x="388.0" y="210.0" />
-        <di:waypoint x="413.0" y="210.0" />
-        <di:waypoint x="413.0" y="210.0" />
+        <di:waypoint x="510" y="210.0" />
+        <di:waypoint x="510" y="210.0" />
         <di:waypoint x="600" y="210.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_record_validate" bpmnElement="user_f_record_validate">
         <di:waypoint x="840" y="210.0" />
-        <di:waypoint x="865" y="210.0" />
-        <di:waypoint x="865" y="210.0" />
+        <di:waypoint x="860" y="210.0" />
+        <di:waypoint x="860" y="210.0" />
         <di:waypoint x="950" y="210.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_validate_decision" bpmnElement="user_f_validate_decision">
         <di:waypoint x="1190" y="210.0" />
-        <di:waypoint x="1215" y="210.0" />
-        <di:waypoint x="1215" y="210.0" />
+        <di:waypoint x="1210" y="210.0" />
+        <di:waypoint x="1210" y="210.0" />
         <di:waypoint x="1395.0" y="210.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_rejected" bpmnElement="user_f_rejected">
         <di:waypoint x="1890" y="210.0" />
-        <di:waypoint x="1915" y="210.0" />
-        <di:waypoint x="1915" y="210.0" />
+        <di:waypoint x="1910" y="210.0" />
+        <di:waypoint x="1910" y="210.0" />
         <di:waypoint x="2102.0" y="210.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_stock_decision" bpmnElement="user_f_stock_decision">
         <di:waypoint x="1890" y="1600.0" />
-        <di:waypoint x="1915" y="1600.0" />
-        <di:waypoint x="1915" y="575.0" />
+        <di:waypoint x="1910" y="1600.0" />
+        <di:waypoint x="1910" y="575.0" />
         <di:waypoint x="2095.0" y="575.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_recheck" bpmnElement="user_f_recheck">
-        <di:waypoint x="2470.0" y="525" />
-        <di:waypoint x="2470.0" y="485" />
-        <di:waypoint x="1770.0" y="485" />
-        <di:waypoint x="1770.0" y="1550" />
+        <di:waypoint x="2350" y="550.0" />
+        <di:waypoint x="2322" y="550.0" />
+        <di:waypoint x="2322" y="445" />
+        <di:waypoint x="1924" y="445" />
+        <di:waypoint x="1924" y="1625.0" />
+        <di:waypoint x="1890" y="1625.0" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1782.0" y="987.5" width="220" height="60" />
+          <dc:Bounds x="1936" y="1005.0" width="220" height="60" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_pack" bpmnElement="user_f_pack">
         <di:waypoint x="2495.0" y="870.0" />
-        <di:waypoint x="2520.0" y="870.0" />
-        <di:waypoint x="2520.0" y="575.0" />
+        <di:waypoint x="2610" y="870.0" />
+        <di:waypoint x="2610" y="575.0" />
         <di:waypoint x="2700" y="575.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_invoice" bpmnElement="user_f_invoice">
         <di:waypoint x="2495.0" y="870.0" />
-        <di:waypoint x="2520.0" y="870.0" />
-        <di:waypoint x="2520.0" y="1600.0" />
+        <di:waypoint x="2610" y="870.0" />
+        <di:waypoint x="2610" y="1600.0" />
         <di:waypoint x="2700" y="1600.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_pack_join" bpmnElement="user_f_pack_join">
         <di:waypoint x="2940" y="575.0" />
-        <di:waypoint x="2965" y="575.0" />
-        <di:waypoint x="2965" y="575.0" />
+        <di:waypoint x="2990" y="575.0" />
+        <di:waypoint x="2990" y="575.0" />
         <di:waypoint x="3145.0" y="575.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_invoice_join" bpmnElement="user_f_invoice_join">
         <di:waypoint x="2940" y="1600.0" />
-        <di:waypoint x="2965" y="1600.0" />
-        <di:waypoint x="2965" y="575.0" />
+        <di:waypoint x="2990" y="1600.0" />
+        <di:waypoint x="2990" y="575.0" />
         <di:waypoint x="3145.0" y="575.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_dispatch" bpmnElement="user_f_dispatch">
         <di:waypoint x="3195.0" y="575.0" />
-        <di:waypoint x="3220.0" y="575.0" />
-        <di:waypoint x="3220.0" y="575.0" />
+        <di:waypoint x="3310" y="575.0" />
+        <di:waypoint x="3310" y="575.0" />
         <di:waypoint x="3400" y="575.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_complete" bpmnElement="user_f_complete">
         <di:waypoint x="3640" y="575.0" />
-        <di:waypoint x="3665" y="575.0" />
-        <di:waypoint x="3665" y="575.0" />
+        <di:waypoint x="3690" y="575.0" />
+        <di:waypoint x="3690" y="575.0" />
         <di:waypoint x="3852.0" y="575.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_invalid" bpmnElement="user_f_invalid">
         <di:waypoint x="1445.0" y="210.0" />
-        <di:waypoint x="1470.0" y="210.0" />
-        <di:waypoint x="1470.0" y="210.0" />
+        <di:waypoint x="1560" y="210.0" />
+        <di:waypoint x="1560" y="210.0" />
         <di:waypoint x="1650" y="210.0" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1450.0" y="142.0" width="220" height="60" />
+          <dc:Bounds x="1392.5" y="142.0" width="220" height="60" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_valid" bpmnElement="user_f_valid">
         <di:waypoint x="1445.0" y="210.0" />
-        <di:waypoint x="1470.0" y="210.0" />
-        <di:waypoint x="1470.0" y="1600.0" />
+        <di:waypoint x="1560" y="210.0" />
+        <di:waypoint x="1560" y="1600.0" />
         <di:waypoint x="1650" y="1600.0" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1482.0" y="875.0" width="220" height="60" />
+          <dc:Bounds x="1572" y="875.0" width="220" height="60" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_stock_pending" bpmnElement="user_f_stock_pending">
         <di:waypoint x="2145.0" y="575.0" />
-        <di:waypoint x="2170.0" y="575.0" />
-        <di:waypoint x="2170.0" y="575.0" />
+        <di:waypoint x="2260" y="575.0" />
+        <di:waypoint x="2260" y="575.0" />
         <di:waypoint x="2350" y="575.0" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2150.0" y="507.0" width="220" height="60" />
+          <dc:Bounds x="2092.5" y="507.0" width="220" height="60" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_f_stock_ready" bpmnElement="user_f_stock_ready">
         <di:waypoint x="2145.0" y="575.0" />
-        <di:waypoint x="2170.0" y="575.0" />
-        <di:waypoint x="2170.0" y="870.0" />
+        <di:waypoint x="2260" y="575.0" />
+        <di:waypoint x="2260" y="870.0" />
         <di:waypoint x="2445.0" y="870.0" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2182.0" y="692.5" width="220" height="60" />
+          <dc:Bounds x="2272" y="692.5" width="220" height="60" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="shape_user_customer" bpmnElement="user_customer" isHorizontal="true">
         <dc:Bounds x="30" y="1915" width="4320" height="90" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="di_user_order_request" bpmnElement="user_order_request">
-        <di:waypoint x="416.0" y="1915" />
-        <di:waypoint x="416.0" y="210.0" />
+        <di:waypoint x="518" y="1915" />
+        <di:waypoint x="518" y="210.0" />
         <di:waypoint x="388.0" y="210.0" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="di_user_dispatch_message" bpmnElement="user_dispatch_message">
         <di:waypoint x="3640" y="575.0" />
-        <di:waypoint x="3668" y="575.0" />
-        <di:waypoint x="3668" y="1915" />
+        <di:waypoint x="3698" y="575.0" />
+        <di:waypoint x="3698" y="1915" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
