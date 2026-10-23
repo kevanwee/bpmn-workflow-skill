@@ -34,6 +34,8 @@ to loopback, checks the Host header and only serves an explicit resource list.
 
 ![Independent bpmn.io editor with process canvas and element inspector](docs/editor-desktop.png)
 
+[![Inspect an activity's systems, documents and readable instructions](docs/editor-detail-desktop.png)](docs/editor-detail-desktop.png)
+
 The [skill instructions](skills/bpmn-workflow/SKILL.md) explain the input format,
 review process and boundaries. The JSON generator supports a documented subset;
 the modeler can edit broader BPMN constructs without converting them into that subset.
