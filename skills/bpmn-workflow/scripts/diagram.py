@@ -50,18 +50,39 @@ def layout(model):
     return positions, 470 + (max(ranks.values())+1)*spacing, y, bounds
 
 
-def waypoints(source, target, index):
+def waypoints(source, target, index, gaps=None, lane_top=None):
+    """Route a sequence flow between shapes.
+
+    gaps gives the clear x just right of the source column and just left of the
+    source/target columns (past every task, system note and work product), so
+    vertical legs never run through another column. lane_top is the top of the
+    upper endpoint's lane, above every system note, for rework loops.
+    """
     x, y, w, h = source
     tx, ty, tw, th = target
     if tx > x:
-        if abs(ty-y) < 45 and tx-(x+w) > 250:
+        skips_columns = abs(ty-y) < 45 and tx-(x+w) > 250
+        if skips_columns and gaps is None:
             corridor = min(y,ty)-35 if index%2 == 0 else max(y+h,ty+th)+35
             return [(x+w/2, y if index%2 == 0 else y+h), (x+w/2, corridor),
                     (tx+tw/2, corridor), (tx+tw/2, ty if index%2 == 0 else ty+th)]
-        middle = x + w + 25
+        if skips_columns:
+            # Pass over the columns in between along the top of the lane.
+            top = lane_top + 8 + (index % 3) * 6
+            out, back = gaps["after_source"], gaps["before_target"]
+            return [(x+w, y+h/2), (out, y+h/2), (out, top), (back, top), (back, ty+th/2), (tx, ty+th/2)]
+        middle = gaps["after_source"] if gaps else x + w + 25
         return [(x+w, y+h/2), (middle, y+h/2), (middle, ty+th/2), (tx, ty+th/2)]
-    top = min(y, ty) - 22 - (index % 3) * 9
-    return [(x+w/2, y), (x+w/2, top), (tx+tw/2, top), (tx+tw/2, ty)]
+    if gaps is None:
+        top = min(y, ty) - 22 - (index % 3) * 9
+        return [(x+w/2, y), (x+w/2, top), (tx+tw/2, top), (tx+tw/2, ty)]
+    # Rework loop: leave the source sideways, run along the top of the lane above
+    # every system note, and come back down into the target from its right. It
+    # uses the upper/lower quarter of each side and its own channel, so it never
+    # shares a line with the forward flows entering and leaving at mid-height.
+    top = lane_top + 8 + (index % 3) * 6
+    left, right = gaps["before_source"] - 8, gaps["after_target"] + 14
+    return [(x, y+h/4), (left, y+h/4), (left, top), (right, top), (right, ty+th*3/4), (tx+tw, ty+th*3/4)]
 
 
 def condition_label(edge):
@@ -101,14 +122,14 @@ def information_items(model, positions):
                    'name':product['name'],'bounds':(x+index*145,y+h+35,125,max(70,20+14*len(textwrap.wrap(product['name'],18))))}
 
 
-def message_points(message, positions, nodes):
+def message_points(message, positions, nodes, gap_after=None):
     # Connect external pools vertically near the receiving/sending task, rather
     # than running a message line through intervening activity labels.
     internal = message["source"] if message["source"] in nodes else message["target"]
     external = message["target"] if internal == message["source"] else message["source"]
     x,y,w,h = positions[internal]
     _,py,_,_ = positions[external]
-    corridor = x+w+28
+    corridor = gap_after(internal) + 8 if gap_after else x+w+28
     points = [(x+w,y+h/2), (corridor,y+h/2), (corridor,py)]
     return points if internal == message["source"] else list(reversed(points))
 
@@ -165,6 +186,24 @@ def bpmn_xml(manifest, model_name):
             'Accountable role: '+node['responsible_role'] if node.get('responsible_role') else ''
         ]))
     info = list(information_items(model, positions))
+    # Columns before events/gateways are re-centred: connectors run in the gaps
+    # past each column's widest task, system note or work product.
+    frames = {n["id"]: positions[n["id"]] for n in model["nodes"]}
+    reach = defaultdict(float)
+    for nid, (x, _, w, _) in frames.items():
+        reach[x] = max(reach[x], x + w)
+    for item in info:
+        bx, _, bw, _ = item["bounds"]
+        reach[frames[item["node"]][0]] = max(reach[frames[item["node"]][0]], bx + bw)
+    def column(ref):
+        return frames.get(ref) or positions[ref]
+    def gap_after(ref):
+        x, _, w, _ = column(ref)
+        return reach.get(x, x + w) + 20
+    def gap_before(ref):
+        return column(ref)[0] - 20
+    def lane_of(ref):
+        return nodes[ref]["lane"] if ref in nodes else nodes[subs[ref]["entry"]]["lane"]
     for item in info:
         if item['kind']=='system':
             annotation=element(process,'textAnnotation',id=item['id'])
@@ -246,7 +285,10 @@ def bpmn_xml(manifest, model_name):
         for px,py in points:element(edge,'waypoint',D,x=px,y=py)
     for index, (eid, (src, dst)) in enumerate(flow_refs.items()):
         edge = element(plane, "BPMNEdge", DI, id="di_"+xid(eid), bpmnElement=xid(eid))
-        points=waypoints(positions[src], positions[dst], index)
+        gaps = {"after_source": gap_after(src), "before_source": gap_before(src),
+                "after_target": gap_after(dst), "before_target": gap_before(dst)}
+        lane_top = min(lane_bounds[lane_of(src)][0], lane_bounds[lane_of(dst)][0])
+        points=waypoints(positions[src], positions[dst], index, gaps, lane_top)
         for x, y in points:
             element(edge, "waypoint", D, x=x, y=y)
         declared=next(e for e in model['edges']+model['conditional_edges'] if e['id']==eid)
@@ -260,7 +302,7 @@ def bpmn_xml(manifest, model_name):
         shape(xid(lane["id"]), positions[lane["id"]], isHorizontal="true")
     for index, message in enumerate(model["messages"]):
         edge = element(plane, "BPMNEdge", DI, id="di_"+xid(message["id"]), bpmnElement=xid(message["id"]))
-        for x, y in message_points(message, positions, nodes):
+        for x, y in message_points(message, positions, nodes, gap_after):
             element(edge, "waypoint", D, x=x, y=y)
     ET.indent(root)
     return ET.tostring(root, encoding="utf-8", xml_declaration=True)
