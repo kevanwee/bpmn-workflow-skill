@@ -1,7 +1,7 @@
 # Origin and third-party notices
 
 The deterministic Python diagram exporter was adapted from Kevan Wee's MIT-licensed
-process modeller, source commit `80dae05065cf12041c3300e25f6eb6b47244abce`.
+`kevanwee/legal-processmodelling-meta-skill`, source commit `80dae05065cf12041c3300e25f6eb6b47244abce`.
 The adapted source is included in this repository; there is no runtime, installation
 or repository-access dependency on that project. The original copyright and MIT
 permission are retained in LICENSE. The new input format, validation, editor wrapper

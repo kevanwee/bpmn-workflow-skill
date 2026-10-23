@@ -21,5 +21,8 @@ framing corrections. The reviewer scored all three findings resolved and issued 
 scoped **ship** verdict. The generated XML also passes the official OMG BPMN XSD
 validation using an external schema bundle; that bundle is not an installation dependency.
 No business process was executed. No legal adequacy, target-engine compatibility or
-deadlock-freedom claim follows from these checks. Python 3.11 and Linux are CI targets;
-the local measurements above are Windows/Python 3.14 only.
+deadlock-freedom claim follows from these checks. Local measurements above use Windows/Python 3.14.
+
+The [GitHub Actions run](https://github.com/kevanwee/bpmn-workflow-skill/actions/runs/39884213264)
+also passed the full suite on Ubuntu with Python 3.11 and Node 24, at source commit
+`d88e8ec1e4cfa452ab6c55780415db0882436069`.
